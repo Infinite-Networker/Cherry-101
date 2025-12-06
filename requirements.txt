@@ -1,0 +1,54 @@
+# Cherry 101 - Requirements
+
+## Dependencies for CherryScript Runtime & Cherry 101
+
+This `requirements.txt` file contains all Python dependencies required to run Cherry 101—the world's first CherryScript program—and the CherryScript language runtime.
+
+### **Core Language Runtime**
+These packages support the CherryScript interpreter and its execution environment:
+- Standard Python libraries for parsing and runtime execution
+- Mock adapters for database, ML, and API operations (included in package)
+- CLI interface for running `.cherry` script files
+
+### **Development & Testing**
+- Python 3.8+ for language features and type hints
+- Mock objects for demonstration without external services
+- JSON handling for evaluation reports
+
+### **Future Production Dependencies**
+For a production deployment (not required for the demo), you would add:
+- `mysql-connector-python` for real MySQL database connections
+- `h2o` package for actual H2O AutoML integration  
+- `fastapi` and `uvicorn` for real model deployment APIs
+- `docker-compose` for containerized environments
+
+### **Quick Setup**
+```bash
+# Install CherryScript runtime and Cherry 101 dependencies
+pip install -e .
+
+# Or for minimal setup (mock implementations work without external packages)
+# Just ensure Python 3.8+ is installed
+```
+
+### **Docker Environment**
+The `docker-compose.yml` file sets up:
+- MySQL 8.0 for database operations
+- H2O 3 for AutoML training
+- Custom CherryScript API container for deployment
+
+### **Note on Mock Implementations**
+Cherry 101 currently uses mock adapters that simulate:
+- Database queries with sample data
+- H2O AutoML training with mock models
+- FastAPI endpoints with simulated deployment
+- Evaluation metrics with calculated statistics
+
+These mocks allow you to experience the complete CherryScript workflow without external service dependencies.
+
+---
+
+**CherryScript Version:** 0.1.0  
+**Cherry 101 Version:** 1.0.0  
+**Python:** 3.8+  
+**License:** MIT
