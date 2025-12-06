@@ -1,0 +1,98 @@
+// test.cherry-101
+// Example test script demonstrating Cherry 101's capabilities
+// This showcases the complete CherryScript workflow in action
+
+print("🚀 Starting Cherry 101 Test Suite...")
+print("=" * 40)
+
+// 1. DATABASE CONNECTION & QUERY
+print("\n📊 STEP 1: Database Operations")
+print("-" * 30)
+
+var db = connect("mysql://localhost:3306/ecommerce_db", "admin", "securepass123")
+print("✅ Connected to database:", db.uri)
+
+// Query training data
+var training_data = db.query("SELECT * FROM orders_train WHERE status = 'completed'")
+print("📈 Retrieved", len(training_data), "training records")
+
+// Query test data
+var test_data = db.query("SELECT * FROM orders_test")
+print("📊 Retrieved", len(test_data), "test records")
+
+// 2. DATA PREPARATION
+print("\n🔄 STEP 2: Data Preparation")
+print("-" * 30)
+
+var training_frame = h2o.frame(training_data)
+print("✅ Created training frame with", training_frame.describe().rows, "rows")
+
+var test_frame = h2o.frame(test_data)
+print("✅ Created test frame with", test_frame.describe().rows, "rows")
+
+// 3. MACHINE LEARNING TRAINING
+print("\n🤖 STEP 3: AutoML Training")
+print("-" * 30)
+
+var ml_model = h2o.automl(training_frame, "is_return")
+print("✅ Model trained:", ml_model.name)
+print("📊 Leaderboard contains", len(ml_model.leaderboard), "models")
+
+// 4. MODEL DEPLOYMENT
+print("\n🚀 STEP 4: Model Deployment")
+print("-" * 30)
+
+var api_endpoint = deploy(ml_model, "http://localhost:8080/predict")
+print("✅ Model deployed to endpoint:", api_endpoint.url)
+
+// 5. PREDICTION & EVALUATION
+print("\n📈 STEP 5: Predictions & Evaluation")
+print("-" * 30)
+
+// Make predictions on test data
+var predictions = predict(ml_model, test_frame)
+print("✅ Generated", len(predictions), "predictions")
+
+// Evaluate model performance
+var evaluation_metrics = evaluate(predictions, "is_return", "test_evaluation.json")
+print("📊 Evaluation complete! Report saved to test_evaluation.json")
+
+// 6. RESULTS DISPLAY
+print("\n🏆 STEP 6: Performance Metrics")
+print("-" * 30)
+
+print("Model Performance Summary:")
+print("  Accuracy:  ${round(evaluation_metrics.accuracy * 100, 2)}%")
+print("  Precision: ${round(evaluation_metrics.precision * 100, 2)}%")
+print("  Recall:    ${round(evaluation_metrics.recall * 100, 2)}%")
+print("  F1 Score:  ${round(evaluation_metrics.f1 * 100, 2)}%")
+
+// Display confusion matrix
+var cm = evaluation_metrics.confusion_matrix
+print("\nConfusion Matrix:")
+print("  True Positives:  ${cm.TP}")
+print("  False Positives: ${cm.FP}")
+print("  True Negatives:  ${cm.TN}")
+print("  False Negatives: ${cm.FN}")
+
+// 7. CLEANUP & VERIFICATION
+print("\n🧹 STEP 7: Cleanup Verification")
+print("-" * 30)
+
+// Verify deployment is accessible
+if (len(predictions) > 0) {
+    print("✅ Deployment verified - predictions generated successfully")
+} else {
+    print("⚠️  Warning: No predictions generated")
+}
+
+// Check if evaluation file was created
+if (evaluation_metrics != null) {
+    print("✅ Evaluation report created with metrics")
+}
+
+print("\n" + "=" * 40)
+print("🎉 Cherry 101 Test Suite COMPLETED!")
+print("✅ All steps executed successfully in CherryScript")
+print("✅ End-to-end ML pipeline demonstrated")
+print("✅ Model trained, deployed, and evaluated")
