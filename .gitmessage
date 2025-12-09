@@ -1,0 +1,86 @@
+# Cherry-101 Commit Guidelines
+
+# ===============================================
+# Cherry-101: The First CherryScript Program
+# Repository: https://github.com/Infinite-Networker/Cherry101
+# License: MIT
+# Version: v0.1.0
+# ===============================================
+
+# Commit Format:
+# <type>(<scope>): <subject>
+# <BLANK LINE>
+# <body>
+# <BLANK LINE>
+# <footer>
+
+# Types:
+#   feat     - New feature for Cherry-101
+#   fix      - Bug fix in CherryScript implementation
+#   docs     - Documentation only changes
+#   style    - Code formatting, missing semicolons, etc.
+#   refactor - Code restructuring, no functionality change
+#   test     - Adding or updating tests
+#   chore    - Build process or auxiliary tool changes
+#   ml       - Machine Learning/AutoML related changes
+#   db       - Database adapter changes
+#   deploy   - Deployment/Endpoint related changes
+#   parser   - Parser or interpreter changes
+#   runtime  - Runtime environment changes
+
+# Scopes:
+#   cherry   - CherryScript language core
+#   adapter  - Database/ML/Deployment adapters
+#   cli      - Command Line Interface
+#   examples - Example scripts and demos
+#   docker   - Containerization
+#   docs     - Documentation
+#   tests    - Test suite
+
+# Examples:
+#   feat(parser): Add support for for-loops in CherryScript
+#   fix(adapter): Resolve MySQL connection timeout issue
+#   docs(examples): Add Cherry-101 tutorial with step-by-step guide
+#   ml(adapter): Improve H2O AutoML integration performance
+
+# Subject Line Guidelines:
+# - Use imperative mood: "Add feature" not "Added feature"
+# - First letter lowercase
+# - No period at end
+# - Keep under 72 characters
+
+# Body Guidelines:
+# - Explain WHAT and WHY, not HOW
+# - Reference issue numbers when applicable
+# - Wrap at 72 characters
+
+# Footer Guidelines:
+# - Reference GitHub issues: "Fixes #123"
+# - Breaking changes: "BREAKING CHANGE: <explanation>"
+
+# ===============================================
+# 🍒 Write your commit message above this line 🍒
+# ===============================================
+
+# ===============================================
+# Cherry-101 Commit Checklist:
+# [ ] Self-review of code changes
+# [ ] Tests pass locally
+# [ ] Documentation updated (if needed)
+# [ ] No new warnings or errors
+# [ ] Follows CherryScript coding conventions
+# [ ] Version compatibility checked
+# [ ] Dependencies updated (if needed)
+# ===============================================
+
+# ===============================================
+# Special Notes for Cherry-101:
+# - Remember: Cherry-101 is the FIRST CherryScript program
+# - Maintain backward compatibility when possible
+# - Include practical examples for new features
+# - Update test.cherry-101 for major changes
+# - Keep the spirit of "A sweet way to code"
+# ===============================================
+
+# Delete all lines starting with '#' to write your commit message
+# Lines starting with '#' will be ignored
