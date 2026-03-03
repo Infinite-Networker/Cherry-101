@@ -1,5 +1,5 @@
-from cherryscript.parser import split_statements, parse_call
-from cherryscript.runtime.adapters import Database, to_frame, automl_train, deploy_model, evaluate_predictions, write_json_report
+from Cherry_101_parser import split_statements, parse_call
+from Cherry_101_adapters import Database, to_frame, automl_train, deploy_model, evaluate_predictions, write_json_report
 def eval_literal(t):
     t=t.strip()
     if t.startswith('"') and t.endswith('"'): return t[1:-1]
@@ -14,8 +14,13 @@ class Runtime:
         if name.endswith('.query'):
             var=name.split('.')[0]; db=self.env.get(var); sql=eval_literal(args[0]); return db.query(sql)
         if name=='h2o.frame':
-            a=args[0]; return to_frame(self.env.get(a) if a in self.env else [])
-        if name=='h2o.automl': return automl_train(None, None)
+            a = args[0] if args else None
+            val = self.env.get(a) if (a and a in self.env) else []
+            return to_frame(val)
+        if name=='h2o.automl':
+            frame = self.env.get(args[0]) if len(args) > 0 else None
+            target = eval_literal(args[1]) if len(args) > 1 else 'is_return'
+            return automl_train(frame, target)
         if name=='deploy': m=args[0]; return deploy_model(self.env.get(m) if isinstance(m,str) else m, eval_literal(args[1]) if len(args)>1 else 'http://127.0.0.1:8080/predict')
         if name=='predict':
             m=args[0]; f=args[1]

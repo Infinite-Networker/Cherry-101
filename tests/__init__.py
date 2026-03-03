@@ -1,1 +1,1 @@
-__version__ = '0.1.0'
+# Cherry-101 test suite
