@@ -17,11 +17,14 @@ class Database:
             return [{'id':1,'status':'shipped','is_return':0,'amount':110.0},{'id':2,'status':'shipped','is_return':1,'amount':40.0}]
         return [{'id':1,'status':'shipped','is_return':0,'amount':100.0},{'id':2,'status':'shipped','is_return':1,'amount':50.0}]
 def to_frame(val): return Frame(val if isinstance(val,list) else [])
-def automl_train(frame, target, max_runtime_secs=60): return Model('mock', [{'model':'m','auc':0.9}])
+def automl_train(frame, target, max_runtime_secs=60):
+    rows = frame.rows if (frame and hasattr(frame, 'rows')) else []
+    label = target if isinstance(target, str) else 'is_return'
+    return Model(f'mock_{label}', [{'model': 'm', 'auc': 0.9, 'target': label, 'training_rows': len(rows)}])
 def deploy_model(model, endpoint_url='http://127.0.0.1:8080/predict'): return Endpoint(endpoint_url)
 def undeploy_controller(ctrl, timeout=5.0): return True
 def evaluate_predictions(preds, label_col='is_return'):
-    rows = preds if isinstance(preds,list) else preds
+    rows = preds if isinstance(preds, list) else list(preds)
     TP=FP=TN=FN=0
     for r in rows:
         p = r.get('prediction'); a = r.get('actual') if 'actual' in r else r.get(label_col)
