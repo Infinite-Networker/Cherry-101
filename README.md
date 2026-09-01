@@ -206,6 +206,12 @@ pip install -r requirements.txt
 python src/Cherry-101-cli.py examples/test.cherry-101
 ```
 
+A first workflow that uses only the statements the runtime can execute today:
+
+```bash
+python src/Cherry-101-cli.py examples/return_risk_snapshot.cherry-101
+```
+
 <br/>
 
 ## 🗺️ Roadmap

@@ -1,0 +1,15 @@
+// Return Risk Snapshot
+// First Cherry-101 workflow that the current runtime can actually execute.
+// Uses only: var assignment, connect, query, h2o.frame, h2o.automl,
+// deploy, predict, evaluate, and a single-argument print.
+
+var db = connect("mysql://localhost:3306/ecommerce_db", "admin", "securepass123")
+var training_data = db.query("SELECT * FROM orders_train WHERE status = 'completed'")
+var test_data = db.query("SELECT * FROM orders_test")
+var training_frame = h2o.frame(training_data)
+var test_frame = h2o.frame(test_data)
+var ml_model = h2o.automl(training_frame, "is_return")
+var api_endpoint = deploy(ml_model, "http://localhost:8080/predict")
+var predictions = predict(ml_model, test_frame)
+var evaluation_metrics = evaluate(predictions, "is_return", "return_risk_report.json")
+print("Return Risk Snapshot complete. Open return_risk_report.json")
